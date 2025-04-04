@@ -64,7 +64,12 @@ class ProArgumentParser(argparse.ArgumentParser):
 
     def print_help_for_command(self, command: str):
         args_list = command.split()
-        args_list.append("--help")
+
+        # If the command is "help", do not append "--help" to avoid
+        # duplicating list entries
+        if len(args_list) == 0 or args_list[0] != "help":
+            args_list.append("--help")
+
         try:
             self.parse_args(args_list)
         # We want help for any specific command,
